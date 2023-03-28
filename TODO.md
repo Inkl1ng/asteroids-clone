@@ -19,6 +19,11 @@ completed tasks
   - objects will accelerate up to a top speed and will stay at that top speed unless it starts moving in another direction
   - might have to seperate movement into delta_x and delta_y for ease of calculation
 - [ ] Add asteroids @Inkl1ng 2023-3-27
+  - [ ] make sprites @Inkl1ng 2023-3-27
+    - maybe ask friends to help make asteroid sprites
+  - [ ] **Add collision** @Inkl1ng 2023-3-27
 
+### VERY FAR
+- [ ] Ship finished product as a .exe and share @Inkl1ng 2023-3-27
 
 ### completed tasks
