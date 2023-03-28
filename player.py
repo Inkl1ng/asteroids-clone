@@ -1,11 +1,9 @@
 import pygame
 import math
-from main import SCREEN_WIDTH
-from main import SCREEN_HEIGHT
 
 
 class Player(object):
-    def __init__(self, surface, color, x, y, radius):
+    def __init__(self, surface: pygame.Surface, color: tuple[int, int, int], x: int, y: int, radius: int):
         self.surface = surface
         self.color = color
         self.x = x
@@ -13,7 +11,7 @@ class Player(object):
         self.angle = 180
         self.radius = radius
         self.velocity = 10
-        self.rotation_rate = 5
+        self.rotation_rate = 5 
 
     def update_verticies(self):
         head_radians = math.radians(self.angle)
@@ -29,21 +27,17 @@ class Player(object):
     def draw(self):
         self.update_verticies()
         self.move()
-        self.shoot()
         self.rotate()
-        self.update_projectiles()
 
-        for projectile in self.projectiles:
-            projectile.draw()
         pygame.draw.polygon(self.surface, self.color, self.verticies)
 
     def move(self):
         keys = pygame.key.get_pressed()
 
-        if (keys[pygame.K_w] or keys[pygame.K_UP]) and self.x > 0 and self.x < SCREEN_WIDTH:
+        if (keys[pygame.K_w] or keys[pygame.K_UP]) and self.x > 0 and self.x < self.surface.get_width():
             self.x -= self.velocity * math.cos(math.radians(self.angle)) 
             self.y -= self.velocity * math.sin(math.radians(self.angle))
-        if keys[pygame.K_s] or keys[pygame.K_DOWN] and self.y > 0 and self.x < SCREEN_HEIGHT:
+        if keys[pygame.K_s] or keys[pygame.K_DOWN] and self.y > 0 and self.x < self.surface.get_height():
             self.x += self.velocity * math.cos(math.radians(self.angle))
             self.y += self.velocity * math.sin(math.radians(self.angle))
 
