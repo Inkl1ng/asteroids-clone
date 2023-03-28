@@ -15,8 +15,6 @@ class Player(object):
         self.velocity = 10
         self.rotation_rate = 5
 
-        self.projectiles = []
-
     def update_verticies(self):
         head_radians = math.radians(self.angle)
         left_radians = math.radians(self.angle + 120)
@@ -27,11 +25,6 @@ class Player(object):
             [self.x - round(math.cos(left_radians) * self.radius), self.y - round(math.sin(left_radians) * self.radius)],
             [self.x - round(math.cos(right_radians) * self.radius), self.y - round(math.sin(right_radians) * self.radius)]
         ]
-
-    def update_projectiles(self):
-        for projectile in self.projectiles:
-            if not projectile.in_bounds():
-                self.projectiles.pop(self.projectiles.index(projectile))
 
     def draw(self):
         self.update_verticies()
