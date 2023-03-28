@@ -3,6 +3,7 @@ import sys
 import os
 from player import Player
 
+
 def main():
     pygame.init()
     os.system('cls||clear')
@@ -27,6 +28,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
+        print(player.velocity, player.MAX_VELOCITY)
         window.fill((0, 0, 0))
         player.draw()
         pygame.display.update()
