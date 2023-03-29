@@ -10,15 +10,10 @@ tasks to do
   ^^^ 2 spaces of indent
 
 completed tasks
- - [x] Completed task title
+ - [x] Completed task title @completor (Start date) - (Completion date)
 
 ### General
 - [ ] Watch more gameplay to understand how the original game works @Inkl1ng 2023-3-27
-- [ ] Work on shooting scripts @Inkl1ng 2023-3-27
-- [ ] Work on simulating movement in space @Inkl1ng 2023-3-27
-  - objects will accelerate up to a top speed and will stay at that top speed unless it starts moving in another direction
-  - might have to seperate movement into delta_x and delta_y for ease of calculation
-  - LINE 72, 32 in player.py
 - [ ] Add asteroids @Inkl1ng 2023-3-27
   - [ ] make sprites @Inkl1ng 2023-3-27
     - maybe ask friends to help make asteroid sprites
@@ -28,3 +23,5 @@ completed tasks
 - [ ] Ship finished product as a .exe and share @Inkl1ng 2023-3-27
 
 ### completed tasks
+- [x] Work on simulating movement in space @Inkl1ng 2023-3-27 - 2023-3-29
+- [x] Work on shooting scripts @Inkl1ng 2023-3-27 - 2023-3-29
