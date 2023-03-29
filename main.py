@@ -28,7 +28,7 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        print(player.x_velocity, player.y_velocity, player.velocity, player.x, player.y)
+        print(f"{player.velocity}\t{player.x}\t{player.y}\t{player.angle}")
         window.fill((0, 0, 0))
         player.draw()
         pygame.display.update()
