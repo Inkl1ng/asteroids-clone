@@ -7,10 +7,10 @@ from player import Player
 def main():
     pygame.init()
     os.system('cls||clear')
-    RUNNING = True
-    SCREEN_WIDTH = 1280
-    SCREEN_HEIGHT = 720
-    BASIC_COLORS = {
+    running = True
+    screen_width = 1280
+    screen_height = 720
+    basic_colors = {
         'black': (0, 0, 0),
         'white': (255, 255, 255),
         'red': (255, 0, 0),
@@ -19,20 +19,21 @@ def main():
     }
 
     clock = pygame.time.Clock()
-    window = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    player = Player(window, BASIC_COLORS['white'], 100, 40, 40)
+    window = pygame.display.set_mode((screen_width, screen_height))
+    player = Player(window, basic_colors['white'], 100, 40, 40)
 
-    while RUNNING:
+    while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
 
-        print(player.velocity, player.MAX_VELOCITY)
+        print(player.x_velocity, player.y_velocity, player.velocity, player.x, player.y)
         window.fill((0, 0, 0))
         player.draw()
         pygame.display.update()
         clock.tick(60)
+
 
 if __name__ == '__main__':
     main()
