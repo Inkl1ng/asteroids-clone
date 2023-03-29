@@ -1,14 +1,16 @@
 import pygame
 import math
 import calc
+from projectile import Projectile
 
 
 class Player(object):
-    def __init__(self, surface: pygame.Surface, color: tuple[int, int, int], x: int, y: int, radius: int):
+    def __init__(self, surface, color: tuple[int, int, int], x: int, y: int, radius: int):
         self.surface = surface
         self.color = color
         self.x = x
         self.y = y
+        self.verticies = []
         self.RADIUS = radius
 
         self.angle = 180
@@ -24,13 +26,20 @@ class Player(object):
         self.ACCELERATION_RATE = self.MAX_VELOCITY / (60 * self.TIME_TO_ACCELERATE)
         self.DECCELERATION_RATE = 0.95
 
+        self.projectiles = []
+        # SHOT_TIMER / 1000 = time between shots in SECOND
+        # ex. 500 / 1000 = 0.5 seconds
+        self.SHOT_TIMER =  250
+        self.last_shot = 0
+
     # all the necessary methods for the player to function in one method to call in main
     def draw(self):
-        verticies = self.calc_verticies()
+        self.verticies = self.calc_verticies()
         self.reset_angles()
         self.move()
+        self.shoot()
         self.out_of_bounds()
-        pygame.draw.polygon(self.surface, self.color, verticies, 1)
+        pygame.draw.polygon(self.surface, self.color, self.verticies, 1)
 
     # each vertex of the triangle is calculated as a point on a circle at a certain angle
     def calc_verticies(self) -> list[list[int, int], list[int, int], list[int, int]]:
@@ -62,6 +71,10 @@ class Player(object):
             self.x_velocity -= self.ACCELERATION_RATE * math.cos(radians)
             self.y_velocity -= self.ACCELERATION_RATE * math.sin(radians)
         else:
+            # i have no how this works
+            # i just put in a random number and it works
+            # every frame the ship's velocity is reduced by 98%
+            # idk how this adds up over time but it works :)
             self.x_velocity *= 0.98
             self.y_velocity *= 0.98
 
@@ -75,9 +88,9 @@ class Player(object):
         #     self.y_velocity -= self.ACCELERATION_RATE * math.sin(radians)
 
         self.x += self.x_velocity
-        self.x = round(self.x)
+        # self.x = round(self.x)
         self.y += self.y_velocity
-        self.y = round(self.y)
+        # self.y = round(self.y)
         
     # moves player onto other side of the screen if they go off screen
     def out_of_bounds(self):
@@ -99,6 +112,31 @@ class Player(object):
         if keys[pygame.K_RIGHT]:
             self.angle += self.ROTATION_RATE
 
+    def shoot(self):
+        keys = pygame.key.get_pressed()
+        HEAD_VERTEX = 0
+        head_x = self.verticies[HEAD_VERTEX][0]
+        head_y = self.verticies[HEAD_VERTEX][1]
+        current_time = pygame.time.get_ticks()
+
+        if keys[pygame.K_SPACE] and current_time > self.last_shot:
+            # updates when the last shot was taken
+            self.last_shot = current_time + self.SHOT_TIMER
+            self.projectiles.append(Projectile(self.surface, head_x, head_y, self.velocity, self.angle))
+
+    def draw_projectiles(self):
+        for projectile in self.projectiles:
+            # checks if the projectile are off screen and delete them if they are
+            if projectile.x < 0 or projectile.x > projectile.surface.get_width():
+                self.projectiles.pop(self.projectiles.index(projectile))
+            elif projectile.y < 0 or projectile.y > projectile.surface.get_height():
+                self.projectiles.pop(self.projectiles.index(projectile))
+            else:
+                projectile.draw()
+
+    # keeps the angles between 0 and 359 for ease of tracking
+    # for example -10 degrees gets converted to 350 degrees
+    # 375 gets convereted to 15
     def reset_angles(self):
         if self.angle == 360:
             self.angle = 0

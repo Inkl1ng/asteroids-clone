@@ -28,9 +28,10 @@ def main():
                 pygame.quit()
                 sys.exit()
 
-        print(f"{player.velocity}\t{player.x}\t{player.y}\t{player.angle}")
+        print(f"{player.velocity}\t{player.x}\t{player.y}\t{player.angle}\t{len(player.projectiles)}")
         window.fill((0, 0, 0))
         player.draw()
+        player.draw_projectiles()
         pygame.display.update()
         clock.tick(60)
 
