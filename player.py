@@ -18,13 +18,13 @@ class Player(object):
         self.velocity = 15
         self.x_velocity = 0
         self.y_velocity = 0
-        self.MAX_VELOCITY = 15
+        self.MAX_VELOCITY = 10
         self.TIME_TO_ACCELERATE = 1
         # 60 is there because framerate is 60 fps
         # multiply by time to accelerate
         # ship will accelerate up to MAX_VELOCITY in 60 * TIME_TO_ACCELERATE seconds
         self.ACCELERATION_RATE = self.MAX_VELOCITY / (60 * self.TIME_TO_ACCELERATE)
-        self.DECCELERATION_RATE = 0.95
+        self.DECCELERATION_RATE = 0.90
 
         self.projectiles = []
         # SHOT_TIMER / 1000 = time between shots in SECOND
@@ -32,14 +32,20 @@ class Player(object):
         self.SHOT_TIMER =  250
         self.last_shot = 0
 
+        self.rect = None
+        self.alive = True
+
     # all the necessary methods for the player to function in one method to call in main
     def draw(self):
         self.verticies = self.calc_verticies()
-        self.reset_angles()
-        self.move()
-        self.shoot()
-        self.out_of_bounds()
-        pygame.draw.polygon(self.surface, self.color, self.verticies, 1)
+        if self.alive:
+            self.reset_angles()
+            self.move()
+            self.shoot()
+            calc.off_screen(self)
+            self.rect = pygame.draw.polygon(self.surface, self.color, self.verticies, 1)
+        else:
+            pygame.draw.polygon(self.surface, (255,0,0), self.verticies)
 
     # each vertex of the triangle is calculated as a point on a circle at a certain angle
     def calc_verticies(self) -> list[list[int, int], list[int, int], list[int, int]]:
@@ -83,26 +89,11 @@ class Player(object):
             ratio = self.MAX_VELOCITY / self.velocity
             self.x_velocity *= abs(ratio)
             self.y_velocity *= abs(ratio)
-        # if keys[pygame.K_w]:
-        #     self.x_velocity -= self.ACCELERATION_RATE * math.cos(radians)
-        #     self.y_velocity -= self.ACCELERATION_RATE * math.sin(radians)
 
         self.x += self.x_velocity
         # self.x = round(self.x)
         self.y += self.y_velocity
         # self.y = round(self.y)
-        
-    # moves player onto other side of the screen if they go off screen
-    def out_of_bounds(self):
-        if self.x < 0:
-            self.x = self.surface.get_width()
-        elif self.x > self.surface.get_width():
-            self.x = 0
-        
-        if self.y < 0:
-            self.y = self.surface.get_height()
-        elif self.y > self.surface.get_height():
-            self.y = 0
 
     def rotate(self):
         keys = pygame.key.get_pressed()
@@ -114,9 +105,9 @@ class Player(object):
 
     def shoot(self):
         keys = pygame.key.get_pressed()
-        HEAD_VERTEX = 0
-        head_x = self.verticies[HEAD_VERTEX][0]
-        head_y = self.verticies[HEAD_VERTEX][1]
+        head_vertex = 0
+        head_x = self.verticies[head_vertex][0]
+        head_y = self.verticies[head_vertex][1]
         current_time = pygame.time.get_ticks()
 
         if keys[pygame.K_SPACE] and current_time > self.last_shot:
@@ -142,3 +133,6 @@ class Player(object):
             self.angle = 0
         if self.angle < 0:
             self.angle = 360 + self.angle
+
+    def destruct(self):
+        self.alive = False
