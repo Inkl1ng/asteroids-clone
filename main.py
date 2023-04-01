@@ -1,51 +1,46 @@
 import pygame
 import sys
-import os
 from player import Player
-from asteroid import Asteroid
-
-
-def draw_asteroids(asteroids: list[Asteroid], player: Player):
-    for asteroid in asteroids:
-        asteroid.draw()
-        asteroid.collision(player)
 
 
 def main():
+    RUNNING = True
+    SCREEN_WIDTH = 800
+    SCREEN_HEIGHT = 800
+
+    # center_of_screen = pygame.Rect(400, 400, 3, 3)
+
     pygame.init()
-    os.system('cls||clear')
-    running = True
-    screen_width = 720
-    screen_height = 720
-    basic_colors = {
-        'black': (0, 0, 0),
-        'white': (255, 255, 255),
-        'red': (255, 0, 0),
-        'green': (0, 255, 0),
-        'blue': (0, 0, 255)
-    }
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
     clock = pygame.time.Clock()
-    window = pygame.display.set_mode((screen_width, screen_height))
-    player = Player(window, basic_colors['white'], round(screen_width / 2), round(screen_height / 2), 20)
 
-    asteroids = [
-        Asteroid(window, 50, 50)
-    ]
+    player_surface = pygame.Surface((60,60))
+    # player_surface.fill((0,0,0))
+    player = Player(player_surface)
 
-    while running:
+    while RUNNING:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    sys.exit()
 
-        print(f"{player.velocity}\t{player.x}\t{player.y}\t{player.angle}\t{len(player.projectiles)}")
-        window.fill((0, 0, 0))
+
+        player.update()
+
+        print(f"{player.x_velocity}\t{player.y_velocity}\t{player.x}\t{player.y}\t{player.angle}")
+
+        screen.fill((0, 0, 0))
         player.draw()
-        player.draw_projectiles()
-        # draw_asteroids(asteroids, player)
-        pygame.display.update()
-        clock.tick(60)
+        screen.blit(player_surface, [player.x, player.y])
+        # pygame.draw.rect(screen, (255,0,0), center_of_screen)
+        pygame.display.flip()
 
+        clock.tick(60)
 
 if __name__ == '__main__':
     main()

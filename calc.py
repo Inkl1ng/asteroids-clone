@@ -15,16 +15,16 @@ def distance_to(point_1: tuple, point_2: tuple) -> tuple:
     return ((x_diff ** 2) + (y_diff ** 2)) ** 0.5
 
 
-def off_screen(target):
+def off_screen(target) -> None:
     if target.x < 0:
-        target.x = target.surface.get_width()
-        target.y = random.randint(0, target.surface.get_height())
-    elif target.x > target.surface.get_width():
+        target.x = 800
+        target.y = random.randint(0, 801)
+    elif target.x > 800:
         target.x = 0
-        target.y = random.randint(0, target.surface.get_height())
+        target.y = random.randint(0, 801)
     if target.y < 0:
-        target.x = random.randint(0, target.surface.get_width())
-        target.y = target.surface.get_height()
-    elif target.y > target.surface.get_height():
-        target.x = random.randint(0, target.surface.get_width())
+        target.x = random.randint(0, 801)
+        target.y = 800
+    elif target.y > 800:
+        target.x = random.randint(0, 801)
         target.y = 0
