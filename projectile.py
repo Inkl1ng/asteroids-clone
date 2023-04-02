@@ -1,8 +1,3 @@
-'''
-a module to contain the Projectile class. A projectile class is created
-whenever the player shoots. Projectiles take the velocity of the player when
-it was shot, adds its own velocity, and moves linearly without drag.
-'''
 import pygame
 import math
 

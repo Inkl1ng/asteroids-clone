@@ -1,8 +1,7 @@
+"""
+A module to for commonly used calculations
+"""
 import random
-
-
-def opposite_angle(angle: int) -> int:
-    return 360 - abs(angle - 180)
 
 
 def pythagorean(side_1, side_2) -> float:
@@ -10,6 +9,9 @@ def pythagorean(side_1, side_2) -> float:
 
 
 def distance_to(point_1: tuple, point_2: tuple) -> tuple:
+    """
+    calculates distance between 2 points
+    """
     x_diff = point_2[0] - point_1[0]
     y_diff = point_2[1] - point_1[1]
     return ((x_diff ** 2) + (y_diff ** 2)) ** 0.5
@@ -28,3 +30,4 @@ def off_screen(target) -> None:
     elif target.y > 800:
         target.x = random.randint(0, 801)
         target.y = 0
+        
