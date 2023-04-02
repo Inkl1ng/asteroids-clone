@@ -4,3 +4,4 @@ __pycache__
 
 # ignores files associated with fleet IDE
 .fleet
+.idea
