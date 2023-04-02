@@ -13,7 +13,6 @@ completed tasks
  - [x] Completed task title @completor (Start date) - (Completion date)
 
 ### General
-- [ ] Watch more gameplay to understand how the original game works @Inkl1ng 2023-3-27
 - [ ] Add asteroids @Inkl1ng 2023-3-27
   - [ ] make sprites @Inkl1ng 2023-3-27
     - maybe ask friends to help make asteroid sprites
@@ -25,3 +24,4 @@ completed tasks
 ### completed tasks
 - [x] Work on simulating movement in space @Inkl1ng 2023-3-27 - 2023-3-29
 - [x] Work on shooting scripts @Inkl1ng 2023-3-27 - 2023-3-29
+- [x] Watch more gameplay to understand how the original game works @Inkl1ng 2023-3-27
